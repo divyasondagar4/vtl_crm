@@ -1,0 +1,153 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .page { display: flex; min-height: 600px; background: #f0faf5; border-radius: var(--border-radius-lg); overflow: hidden; }
+  .left { flex: 1; padding: 48px 52px; display: flex; flex-direction: direction; justify-content: space-between; flex-direction: column; background: linear-gradient(145deg, #e8f8f0 0%, #d4f0e4 100%); }
+  .right { width: 380px; background: #ffffff; padding: 40px 36px; display: flex; flex-direction: column; justify-content: center; border-left: 1px solid #d0eadb; }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .logo { width: 42px; height: 42px; background: #1D9E75; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .logo svg { width: 22px; height: 22px; fill: white; }
+  .brand-name { font-size: 17px; font-weight: 500; color: #0F6E56; }
+  .brand-sub { font-size: 12px; color: #1D9E75; }
+  .hero { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 32px 0; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; background: #d4f0e4; color: #0F6E56; font-size: 12px; padding: 5px 12px; border-radius: 20px; font-weight: 500; margin-bottom: 28px; width: fit-content; border: 1px solid #9FE1CB; }
+  .headline { font-size: 38px; font-weight: 600; color: #085041; line-height: 1.2; margin-bottom: 8px; }
+  .headline span { color: #1D9E75; }
+  .sub { font-size: 15px; color: #0F6E56; line-height: 1.6; margin-bottom: 32px; max-width: 380px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { background: rgba(255,255,255,0.7); border: 1px solid #9FE1CB; color: #085041; font-size: 12px; padding: 5px 13px; border-radius: 20px; font-weight: 500; }
+  .footer { font-size: 12px; color: #1D9E75; }
+
+  .welcome { font-size: 26px; font-weight: 600; color: #085041; margin-bottom: 4px; }
+  .welcome-sub { font-size: 13px; color: #5F5E5A; margin-bottom: 24px; }
+  .roles { display: flex; gap: 8px; margin-bottom: 28px; }
+  .role { flex: 1; border: 1.5px solid #d0eadb; border-radius: 10px; padding: 10px 8px; cursor: pointer; text-align: center; background: #fff; transition: all 0.15s; }
+  .role.active { border-color: #1D9E75; background: #f0faf5; }
+  .role-icon { width: 28px; height: 28px; border-radius: 50%; margin: 0 auto 5px; display: flex; align-items: center; justify-content: center; background: #e8f8f0; }
+  .role-icon svg { width: 14px; height: 14px; stroke: #1D9E75; fill: none; stroke-width: 2; }
+  .role.active .role-icon { background: #1D9E75; }
+  .role.active .role-icon svg { stroke: white; }
+  .role-name { font-size: 12px; font-weight: 500; color: #085041; }
+  .role-desc { font-size: 10px; color: #888780; }
+  label { font-size: 13px; font-weight: 500; color: #2C2C2A; display: block; margin-bottom: 5px; }
+  .field { margin-bottom: 16px; }
+  input[type=email], input[type=password] { width: 100%; border: 1.5px solid #d0eadb; border-radius: 8px; padding: 9px 12px; font-size: 14px; color: #2C2C2A; background: #fafffe; outline: none; }
+  input[type=email]:focus, input[type=password]:focus { border-color: #1D9E75; background: #fff; }
+  .btn { width: 100%; background: #1D9E75; color: white; font-size: 14px; font-weight: 500; padding: 11px; border-radius: 8px; border: none; cursor: pointer; margin-top: 4px; }
+  .btn:hover { background: #0F6E56; }
+  .demo-box { background: #f0faf5; border: 1px solid #d0eadb; border-radius: 8px; padding: 12px 14px; margin-top: 20px; }
+  .demo-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .demo-title { font-size: 11px; font-weight: 500; color: #5F5E5A; letter-spacing: 0.5px; text-transform: uppercase; }
+  .demo-badge { background: #1D9E75; color: white; font-size: 10px; padding: 2px 8px; border-radius: 4px; }
+  .demo-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #2C2C2A; padding: 3px 0; }
+  .copy-btn { background: none; border: none; cursor: pointer; padding: 2px 6px; border-radius: 4px; color: #1D9E75; font-size: 11px; }
+  .demo-note { font-size: 10px; color: #888780; margin-top: 6px; }
+  .protected { font-size: 11px; color: #888780; text-align: center; margin-top: 14px; }
+</style>
+
+<div class="page">
+  <div class="left">
+    <div class="brand">
+      <div class="logo">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">Vibe Tech Labs</div>
+        <div class="brand-sub">A Digital Idea To Grow You Up</div>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Smart Attendance &amp; Workforce CRM
+      </div>
+      <div class="headline">Calm attendance.<br><span>Happier workforce.</span></div>
+      <div class="sub">Face check-in, geo-verified at the VTL office, zero friction. A serene CRM for HR, managers and teams.</div>
+      <div class="tags">
+        <span class="tag">Face check-in</span>
+        <span class="tag">Geo verified</span>
+        <span class="tag">Smart leaves</span>
+        <span class="tag">Live analytics</span>
+      </div>
+    </div>
+
+    <div class="footer">© 2026 Vibe Tech Labs. All rights reserved.</div>
+  </div>
+
+  <div class="right">
+    <div class="welcome">Welcome back</div>
+    <div class="welcome-sub">Pick a role to explore the demo workspace.</div>
+
+    <div class="roles">
+      <div class="role active" id="r-admin">
+        <div class="role-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-6 4 2 7-6-4-6 4 2-7-6-4h7z"/></svg>
+        </div>
+        <div class="role-name">Admin</div>
+        <div class="role-desc">Full system access</div>
+      </div>
+      <div class="role" id="r-manager">
+        <div class="role-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <div class="role-name">Manager</div>
+        <div class="role-desc">Team management</div>
+      </div>
+      <div class="role" id="r-emp">
+        <div class="role-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+        </div>
+        <div class="role-name">Employee</div>
+        <div class="role-desc">Self-service portal</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" value="aarav@vibetechlabs.com" />
+    </div>
+    <div class="field">
+      <label for="pass">Password</label>
+      <input type="password" id="pass" value="admin@123" />
+    </div>
+    <button class="btn">Continue to face verification</button>
+
+    <div class="demo-box">
+      <div class="demo-label">
+        <span class="demo-title">Demo credentials</span>
+        <span class="demo-badge">Admin</span>
+      </div>
+      <div class="demo-row">
+        <span>aarav@vibetechlabs.com</span>
+        <button class="copy-btn" title="Copy">Copy</button>
+      </div>
+      <div class="demo-row">
+        <span>admin@123</span>
+        <button class="copy-btn" title="Copy">Copy</button>
+      </div>
+      <div class="demo-note">Any password works in demo · click to autofill.</div>
+    </div>
+
+    <div class="protected">Protected demo · No real data is stored</div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.role').forEach(r => {
+    r.addEventListener('click', () => {
+      document.querySelectorAll('.role').forEach(x => x.classList.remove('active'));
+      r.classList.add('active');
+    });
+  });
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = btn.previousElementSibling.textContent;
+      const emailEl = document.getElementById('email');
+      const passEl = document.getElementById('pass');
+      if (val.includes('@')) emailEl.value = val;
+      else passEl.value = val;
+    });
+  });
+</script>

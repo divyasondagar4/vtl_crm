@@ -1,0 +1,314 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif}
+.scene{min-height:680px;background:#050e1a;border-radius:18px;overflow:hidden;display:flex;position:relative}
+
+canvas.bg{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+
+.aurora{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.aurora-blob{position:absolute;border-radius:50%;filter:blur(60px);animation:drift 8s ease-in-out infinite alternate}
+.a1{width:420px;height:320px;background:rgba(29,158,117,0.18);top:-80px;left:-60px;animation-duration:9s}
+.a2{width:300px;height:300px;background:rgba(55,138,221,0.1);bottom:-60px;left:180px;animation-duration:11s;animation-delay:-3s}
+.a3{width:260px;height:200px;background:rgba(127,119,221,0.1);top:30%;right:280px;animation-duration:7s;animation-delay:-5s}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(30px,20px) scale(1.1)}}
+
+.grid-bg{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:linear-gradient(rgba(29,158,117,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(29,158,117,0.05) 1px,transparent 1px);
+  background-size:52px 52px;animation:gridmove 20s linear infinite}
+@keyframes gridmove{0%{background-position:0 0}100%{background-position:52px 52px}}
+
+.left{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:38px 44px;position:relative;z-index:3}
+.right{width:358px;position:relative;z-index:3;display:flex;flex-direction:column;justify-content:center;padding:36px 32px}
+
+.glass-panel{position:absolute;inset:0;
+  background:rgba(255,255,255,0.03);
+  border-left:1px solid rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px)}
+.glass-shine{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent)}
+
+.brand{display:flex;align-items:center;gap:12px;animation:floatup 0.6s ease both}
+.logo3d{width:46px;height:46px;border-radius:12px;
+  background:linear-gradient(145deg,#2de8a0,#1D9E75);
+  box-shadow:0 4px 20px rgba(29,158,117,0.55),0 0 40px rgba(29,158,117,0.15),inset 0 1px 0 rgba(255,255,255,0.3),inset 0 -2px 0 rgba(0,0,0,0.25);
+  display:flex;align-items:center;justify-content:center;
+  animation:logopulse 3s ease-in-out infinite}
+@keyframes logopulse{0%,100%{box-shadow:0 4px 20px rgba(29,158,117,0.55),0 0 40px rgba(29,158,117,0.15),inset 0 1px 0 rgba(255,255,255,0.3)}50%{box-shadow:0 4px 28px rgba(29,158,117,0.8),0 0 60px rgba(29,158,117,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}}
+.logo3d svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2}
+.bname{font-size:16px;font-weight:700;color:#e2fff6;letter-spacing:-0.3px}
+.bsub{font-size:11px;color:#5DCAA5}
+
+.hero{flex:1;display:flex;flex-direction:column;justify-content:center;padding:20px 0}
+.badge{display:inline-flex;align-items:center;gap:7px;
+  background:rgba(29,158,117,0.12);border:1px solid rgba(29,158,117,0.3);
+  color:#5DCAA5;font-size:11px;font-weight:500;padding:5px 13px;border-radius:20px;
+  width:fit-content;margin-bottom:22px;
+  box-shadow:0 0 16px rgba(29,158,117,0.1),inset 0 1px 0 rgba(255,255,255,0.06);
+  animation:floatup 0.7s 0.1s ease both}
+.bdot{width:6px;height:6px;border-radius:50%;background:#1D9E75;box-shadow:0 0 8px #1D9E75;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(0.8)}}
+.headline{font-size:34px;font-weight:700;line-height:1.15;letter-spacing:-0.8px;color:#dffff3;margin-bottom:12px;animation:floatup 0.7s 0.2s ease both;text-shadow:0 0 40px rgba(29,158,117,0.15)}
+.headline em{color:#25d499;font-style:normal}
+.subtext{font-size:14px;color:#6fa896;line-height:1.75;margin-bottom:26px;max-width:340px;animation:floatup 0.7s 0.3s ease both}
+.tags{display:flex;flex-wrap:wrap;gap:8px;animation:floatup 0.7s 0.4s ease both}
+.tag{background:rgba(255,255,255,0.04);border:1px solid rgba(29,158,117,0.18);border-radius:8px;padding:6px 12px;font-size:12px;color:#9FE1CB;
+  box-shadow:0 2px 8px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.04);
+  display:flex;align-items:center;gap:5px}
+.tag svg{width:12px;height:12px;stroke:#1D9E75;fill:none;stroke-width:2;flex-shrink:0}
+.footer-txt{font-size:11px;color:#2a4f43;animation:floatup 0.7s 0.5s ease both}
+@keyframes floatup{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.welcome{font-size:22px;font-weight:700;color:#dffff3;letter-spacing:-0.4px;margin-bottom:3px;animation:floatup 0.7s 0.2s ease both}
+.wsub{font-size:12px;color:#5a8a7a;margin-bottom:20px;animation:floatup 0.7s 0.25s ease both}
+
+.roles{display:flex;gap:7px;margin-bottom:22px;animation:floatup 0.7s 0.3s ease both}
+.role{flex:1;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:10px 6px;cursor:pointer;text-align:center;
+  background:rgba(255,255,255,0.03);transition:all 0.2s;
+  box-shadow:0 4px 12px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.05)}
+.role:hover{border-color:rgba(29,158,117,0.4);background:rgba(29,158,117,0.07);transform:translateY(-2px)}
+.role.active{border-color:rgba(29,158,117,0.6);background:rgba(29,158,117,0.12);
+  box-shadow:0 4px 20px rgba(29,158,117,0.2),inset 0 1px 0 rgba(255,255,255,0.1)}
+.ricon{width:28px;height:28px;border-radius:50%;margin:0 auto 5px;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.05);transition:all 0.2s}
+.role.active .ricon{background:rgba(29,158,117,0.3);box-shadow:0 0 12px rgba(29,158,117,0.4)}
+.ricon svg{width:13px;height:13px;stroke:#5DCAA5;fill:none;stroke-width:2}
+.role.active .ricon svg{stroke:#25d499}
+.rname{font-size:11px;font-weight:600;color:#b0d8c8}
+.rdesc{font-size:10px;color:#456658}
+
+.flabel{font-size:12px;font-weight:500;color:#7ab8a4;margin-bottom:5px;display:block}
+.field{margin-bottom:14px;animation:floatup 0.7s 0.4s ease both}
+.finput{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;
+  padding:9px 12px;font-size:13px;color:#dffff3;outline:none;transition:all 0.2s}
+.finput:focus{border-color:rgba(29,158,117,0.6);background:rgba(29,158,117,0.06);box-shadow:0 0 0 3px rgba(29,158,117,0.1)}
+
+.btn3d{width:100%;
+  background:linear-gradient(135deg,#1D9E75,#0F6E56);
+  color:#fff;font-size:13px;font-weight:600;padding:11px;
+  border-radius:9px;border:none;cursor:pointer;
+  box-shadow:0 4px 20px rgba(29,158,117,0.45),0 1px 0 rgba(255,255,255,0.15) inset,0 -2px 0 rgba(0,0,0,0.2) inset;
+  transition:all 0.2s;letter-spacing:0.2px;animation:floatup 0.7s 0.45s ease both;
+  display:flex;align-items:center;justify-content:center;gap:8px}
+.btn3d:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(29,158,117,0.6),0 1px 0 rgba(255,255,255,0.2) inset}
+.btn3d:active{transform:translateY(0);box-shadow:0 2px 10px rgba(29,158,117,0.4)}
+.btn3d svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2}
+
+.demo-box{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:12px 14px;margin-top:16px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);animation:floatup 0.7s 0.5s ease both}
+.demo-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
+.demo-title{font-size:10px;font-weight:600;color:#456658;text-transform:uppercase;letter-spacing:0.8px}
+.demo-badge{background:rgba(29,158,117,0.25);color:#5DCAA5;font-size:10px;padding:2px 9px;border-radius:5px;border:1px solid rgba(29,158,117,0.3)}
+.demo-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0}
+.demo-val{font-size:12px;color:#9FE1CB}
+.cpbtn{background:none;border:none;cursor:pointer;padding:2px 8px;border-radius:4px;color:#1D9E75;font-size:11px;
+  transition:all 0.15s}
+.cpbtn:hover{background:rgba(29,158,117,0.15);color:#25d499}
+.demo-note{font-size:10px;color:#2a4f43;margin-top:6px}
+.protected{font-size:11px;color:#2a4f43;text-align:center;margin-top:12px;animation:floatup 0.7s 0.6s ease both}
+
+.particles{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+</style>
+
+<div class="scene" id="scene">
+  <canvas class="bg" id="bgCanvas"></canvas>
+  <div class="aurora">
+    <div class="aurora-blob a1"></div>
+    <div class="aurora-blob a2"></div>
+    <div class="aurora-blob a3"></div>
+  </div>
+  <div class="grid-bg"></div>
+  <div class="particles" id="particles"></div>
+
+  <div class="left">
+    <div class="brand">
+      <div class="logo3d">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <div class="bname">Vibe Tech Labs</div>
+        <div class="bsub">A Digital Idea To Grow You Up</div>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="badge">
+        <span class="bdot"></span>
+        Smart Attendance &amp; Workforce CRM
+      </div>
+      <div class="headline">Calm attendance.<br><em>Happier workforce.</em></div>
+      <div class="subtext">Face check-in, geo-verified at the VTL office, zero friction. A serene CRM for HR, managers and teams.</div>
+      <div class="tags">
+        <div class="tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M3 21c0-4 4-7 9-7s9 3 9 7"/></svg>Face check-in</div>
+        <div class="tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>Geo verified</div>
+        <div class="tag"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Smart leaves</div>
+        <div class="tag"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Live analytics</div>
+      </div>
+    </div>
+
+    <div class="footer-txt">© 2026 Vibe Tech Labs. All rights reserved.</div>
+  </div>
+
+  <div class="right">
+    <div class="glass-panel"></div>
+    <div class="glass-shine"></div>
+
+    <div style="position:relative;z-index:1">
+      <div class="welcome">Welcome back</div>
+      <div class="wsub">Pick a role to explore the demo workspace.</div>
+
+      <div class="roles" id="roles">
+        <div class="role active" data-role="admin">
+          <div class="ricon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div class="rname">Admin</div><div class="rdesc">Full access</div>
+        </div>
+        <div class="role" data-role="manager">
+          <div class="ricon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+          <div class="rname">Manager</div><div class="rdesc">Team mgmt</div>
+        </div>
+        <div class="role" data-role="employee">
+          <div class="ricon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6M9 12h6M9 15h4"/></svg></div>
+          <div class="rname">Employee</div><div class="rdesc">Self-service</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="flabel">Email</label>
+        <input class="finput" type="email" id="email" value="aarav@vibetechlabs.com"/>
+      </div>
+      <div class="field">
+        <label class="flabel">Password</label>
+        <input class="finput" type="password" id="pass" value="admin@123"/>
+      </div>
+      <button class="btn3d">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.5 2 5.5 4 4 7"/><circle cx="12" cy="12" r="3"/><path d="M20 12c0 4.4-3.6 8-8 8S4 16.4 4 12"/></svg>
+        Continue to face verification
+      </button>
+
+      <div class="demo-box">
+        <div class="demo-hdr">
+          <span class="demo-title">Demo credentials</span>
+          <span class="demo-badge">Admin</span>
+        </div>
+        <div class="demo-row">
+          <span class="demo-val">aarav@vibetechlabs.com</span>
+          <button class="cpbtn" onclick="document.getElementById('email').value='aarav@vibetechlabs.com'">Fill</button>
+        </div>
+        <div class="demo-row">
+          <span class="demo-val">admin@123</span>
+          <button class="cpbtn" onclick="document.getElementById('pass').value='admin@123'">Fill</button>
+        </div>
+        <div class="demo-note">Any password works in demo · click to autofill.</div>
+      </div>
+      <div class="protected">Protected demo · No real data is stored</div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.role').forEach(r=>{
+  r.addEventListener('click',()=>{
+    document.querySelectorAll('.role').forEach(x=>x.classList.remove('active'));
+    r.classList.add('active');
+  });
+});
+
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+const scene = document.getElementById('scene');
+
+function resize(){
+  canvas.width = scene.offsetWidth;
+  canvas.height = scene.offsetHeight;
+}
+resize();
+
+const particles = [];
+for(let i=0;i<90;i++){
+  particles.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    r: Math.random()*1.8+0.3,
+    vx: (Math.random()-0.5)*0.35,
+    vy: (Math.random()-0.5)*0.35,
+    o: Math.random()*0.5+0.1,
+    pulse: Math.random()*Math.PI*2
+  });
+}
+
+const lines=[];
+for(let i=0;i<18;i++){
+  lines.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    len: Math.random()*80+40,
+    angle: Math.random()*Math.PI*2,
+    va: (Math.random()-0.5)*0.005,
+    vx: (Math.random()-0.5)*0.2,
+    vy: (Math.random()-0.5)*0.2,
+    o: Math.random()*0.12+0.04
+  });
+}
+
+let t=0;
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  t+=0.01;
+
+  lines.forEach(l=>{
+    l.angle+=l.va;
+    l.x+=l.vx; l.y+=l.vy;
+    if(l.x<-100)l.x=canvas.width+100;
+    if(l.x>canvas.width+100)l.x=-100;
+    if(l.y<-100)l.y=canvas.height+100;
+    if(l.y>canvas.height+100)l.y=-100;
+    ctx.save();
+    ctx.translate(l.x,l.y);
+    ctx.rotate(l.angle);
+    const g=ctx.createLinearGradient(-l.len/2,0,l.len/2,0);
+    g.addColorStop(0,'rgba(29,158,117,0)');
+    g.addColorStop(0.5,`rgba(29,158,117,${l.o})`);
+    g.addColorStop(1,'rgba(29,158,117,0)');
+    ctx.strokeStyle=g;
+    ctx.lineWidth=1;
+    ctx.beginPath();
+    ctx.moveTo(-l.len/2,0);
+    ctx.lineTo(l.len/2,0);
+    ctx.stroke();
+    ctx.restore();
+  });
+
+  particles.forEach(p=>{
+    p.x+=p.vx; p.y+=p.vy;
+    p.pulse+=0.03;
+    if(p.x<0)p.x=canvas.width;
+    if(p.x>canvas.width)p.x=0;
+    if(p.y<0)p.y=canvas.height;
+    if(p.y>canvas.height)p.y=0;
+    const alpha = p.o*(0.7+0.3*Math.sin(p.pulse));
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(29,158,117,${alpha})`;
+    ctx.fill();
+  });
+
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x;
+      const dy=particles[i].y-particles[j].y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<90){
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x,particles[i].y);
+        ctx.lineTo(particles[j].x,particles[j].y);
+        ctx.strokeStyle=`rgba(29,158,117,${0.06*(1-dist/90)})`;
+        ctx.lineWidth=0.5;
+        ctx.stroke();
+      }
+    }
+  }
+
+  requestAnimationFrame(draw);
+}
+draw();
+window.addEventListener('resize',resize);
+</script>
